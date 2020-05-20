@@ -1,10 +1,5 @@
 package com.singhc00.cordova.plugin;
 
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by Fernflower decompiler)
-//
-
 import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -12,10 +7,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
-import android.webkit.WebChromeClient.FileChooserParams;
-
-import com.sap.mp.cordova.plugins.attachmentViewer.AttachmentViewer;
-import com.sap.mp.cordova.plugins.attachmentViewer.FileProviderWithWorkaround;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +28,7 @@ public class ExtendedWebChromeClient extends SystemWebChromeClient {
     public ExtendedWebChromeClient(CordovaPlugin plugin, SystemWebViewEngine parentEngine) {
         super(parentEngine);
         this.plugin = plugin;
-        this.attachmentDir = new File(plugin.cordova.getActivity().getApplicationContext().getCacheDir(), "filepicker");
+        this.attachmentDir = new File(plugin.cordova.getActivity().getApplicationContext().getCacheDir(), "inputfilepicker");
         plugin.cordova.getThreadPool().execute(new Runnable() {
             public void run() {
                 File[] files = com.singhc00.cordova.plugin.ExtendedWebChromeClient.this.attachmentDir.listFiles();
@@ -89,7 +80,7 @@ public class ExtendedWebChromeClient extends SystemWebChromeClient {
             if (takePictureIntent.resolveActivity(this.plugin.cordova.getActivity().getPackageManager()) != null) {
                 this.photoFile = this.createImageFile();
                 if (this.photoFile != null) {
-                    Uri uri = FileProviderWithWorkaround.getUriForFile(this.plugin.cordova.getActivity(), this.plugin.cordova.getContext().getPackageName() + ".KapselAttachmentViewer", this.photoFile);
+                    Uri uri = ExtendedFileProvider.getUriForFile(this.plugin.cordova.getActivity(), this.plugin.cordova.getContext().getPackageName() + ".InputFileSelector", this.photoFile);
                     takePictureIntent.putExtra("output", uri);
                     takePictureIntent.addFlags(2);
                 } else {

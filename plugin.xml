@@ -25,8 +25,22 @@
                 <param name="onload" value="true"/>
             </feature>
         </config-file>
-
+        <!-- Supported android version to be able to use the plugin-->
+        <framework src="com.android.support:support-v4:28.0.0" />
+        <!-- Add the Android manifest for the file authorities-->
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <provider android:name="com.singhc00.cordova.plugin.ExtendedFileProvider"
+                      android:authorities="$PACKAGE_NAME.InputFileSelector"
+                      android:exported="false"
+                      android:grantUriPermissions="true">
+                      <meta-data
+                        android:name="android.support.FILE_PROVIDER_PATHS"
+                        android:resource="@xml/inputfilepaths" />
+            </provider>
+        </config-file>
+        <source-file src="src/android/inputfilepaths.xml" target-dir="res/xml/" />
         <source-file src="src/android/InputFileSelector.java" target-dir="src/com/singhc00/cordova/plugin" />
         <source-file src="src/android/ExtendedWebChromeClient.java" target-dir="src/com/singhc00/cordova/plugin"/>
+        <source-file src="src/android/ExtendedFileProvider.java" target-dir="src/com/singhc00/cordova/plugin"/>
     </platform>
 </plugin>

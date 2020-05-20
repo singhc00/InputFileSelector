@@ -1,28 +1,11 @@
 package com.singhc00.cordova.plugin;
 
-import android.annotation.TargetApi;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.net.Uri;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-
-import com.sap.mp.cordova.plugins.attachmentViewer.AttachmentViewer;
-import com.sap.mp.cordova.plugins.attachmentViewer.ExtendedFilePickerChromeClient;
-import com.sap.mp.cordova.plugins.attachmentViewer.FileProviderWithWorkaround;
 
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.PermissionHelper;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class InputFileSelector extends CordovaPlugin {
     private ExtendedWebChromeClient extendedWebChromeClient;
