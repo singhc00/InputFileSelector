@@ -1,0 +1,37 @@
+{
+  "name": "cordova-plugin-inputfileselector",
+  "version": "0.0.1",
+  "description": "An Android Cordova plugin that allows users to display simple Toast messages at the bottom of the screen.",
+  "cordova": {
+    "id": "cordova-plugin-inputfileselector",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/singhc00/InputFileSelector.git"
+  },
+  "keywords": [
+    "FileSelector",
+    "selector",
+    "file",
+    "input",
+    "camera",
+    "camcoder",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "Chandan Singh<csingh1990@icloud.com>",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/singhc00/InputFileSelector/issues"
+  },
+  "homepage": "https://github.com/singhc00/InputFileSelector"
+}

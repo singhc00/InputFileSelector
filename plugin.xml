@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-inputfileselector" version="0.0.1">
+    <name>InputFileSelector</name>
+
+    <description>Android plugin to change the Input file selector from standard cordove one</description>
+    <license></license>
+
+    <keywords>cordova,android,file,,input</keywords>
+    <repo>https://github.com/singhc00/InputFileSelector.git</repo>
+    <issue>https://github.com/singhc00/InputFileSelector/issues</issue>
+  
+    <engines>
+        <engine name="cordova" version=">=3.0.0"/>
+    </engines>
+  
+    <js-module src="www/inputfileselector.js" name="inputFileSelector">
+        <clobbers target="window.plugins.inputFileSelector" />
+    </js-module>
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="InputFileSelector">
+                <param name="android-package" value="com.singhc00.cordova.plugin.InputFileSelector"/>
+                <param name="onload" value="true"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/InputFileSelector.java" target-dir="src/com/singhc00/cordova/plugin" />
+        <source-file src="src/android/ExtendedWebChromeClient.java" target-dir="src/com/singhc00/cordova/plugin"/>
+    </platform>
+</plugin>
