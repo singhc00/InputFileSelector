@@ -3,6 +3,7 @@ package com.singhc00.cordova.plugin;
 import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.media.CamcorderProfile;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.webkit.ValueCallback;
@@ -24,6 +25,7 @@ public class ExtendedWebChromeClient extends SystemWebChromeClient {
     private boolean permissionRequested = false;
     ExtendedWebChromeClient.PermissionRequestListener permissionRequestListener = null;
     File photoFile = null;
+    File videoFile = null;
 
     public ExtendedWebChromeClient(CordovaPlugin plugin, SystemWebViewEngine parentEngine) {
         super(parentEngine);
@@ -90,6 +92,22 @@ public class ExtendedWebChromeClient extends SystemWebChromeClient {
             }
             /** Create the video content  */
             videoCameraIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            // Check if the activity can be resolved
+            if(takePictureIntent.resolveActivity(this.plugin.cordova.getActivity().getPackageManager()) != null) {
+                this.videoFile = this.createVideoFile();
+                if(this.videoFile != null) {
+                    Uri uri = ExtendedFileProvider.getUriForFile(this.plugin.cordova.getActivity(), this.plugin.cordova.getContext().getPackageName() + ".InputFileSelector", this.videoFile);
+                    videoCameraIntent.putExtra("output", uri);
+                    // This makes sure that the file is saved as mp4
+                    videoCameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+                    videoCameraIntent.addFlags(2);
+                } else {
+                    videoCameraIntent = null;
+                }
+
+
+
+            }
         }
 
         Intent contentSelectionIntent = new Intent("android.intent.action.GET_CONTENT");
@@ -127,8 +145,13 @@ public class ExtendedWebChromeClient extends SystemWebChromeClient {
                     if (com.singhc00.cordova.plugin.ExtendedWebChromeClient.this.photoFile != null) {
                         if (com.singhc00.cordova.plugin.ExtendedWebChromeClient.this.photoFile.length() > 0L && result == null) {
                             result = new Uri[]{Uri.fromFile(com.singhc00.cordova.plugin.ExtendedWebChromeClient.this.photoFile)};
-                        } else {
+                        }
+                        else if(ExtendedWebChromeClient.this.videoFile.length() > 0L && result == null) {
+                            result = new Uri[]{Uri.fromFile(ExtendedWebChromeClient.this.videoFile)};
+                        }
+                        else {
                             com.singhc00.cordova.plugin.ExtendedWebChromeClient.this.photoFile.delete();
+                            ExtendedWebChromeClient.this.videoFile.delete();
                         }
 
                         com.singhc00.cordova.plugin.ExtendedWebChromeClient.this.photoFile = null;
@@ -153,6 +176,22 @@ public class ExtendedWebChromeClient extends SystemWebChromeClient {
             }
 
             File file = File.createTempFile(imageFileName, ".jpg", this.attachmentDir);
+            return file;
+        } catch (IOException var4) {
+            return null;
+        }
+    }
+
+    private File createVideoFile() {
+        String timeStamp = (new SimpleDateFormat("yyyyMMdd_HHmmss")).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+
+        try {
+            if (!this.attachmentDir.exists()) {
+                this.attachmentDir.mkdirs();
+            }
+
+            File file = File.createTempFile(imageFileName, ".mp4", this.attachmentDir);
             return file;
         } catch (IOException var4) {
             return null;
