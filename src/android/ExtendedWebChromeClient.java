@@ -184,7 +184,7 @@ public class ExtendedWebChromeClient extends SystemWebChromeClient {
 
     private File createVideoFile() {
         String timeStamp = (new SimpleDateFormat("yyyyMMdd_HHmmss")).format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        String imageFileName = "MP4_" + timeStamp + "_";
 
         try {
             if (!this.attachmentDir.exists()) {
